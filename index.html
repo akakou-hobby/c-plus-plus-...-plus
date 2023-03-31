@@ -1,0 +1,91 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+<script src="./lib/bf.js"></script>
+
+
+<main>
+  <h1>C++++++++++++++++++++++++++++++</h1>
+
+  <h2>Input</h2>
+  <textarea id="input" style="height: 25em;">
+  </textarea>
+  <button onclick="run('convert')">C++...++ => Brainfuck</button>
+  <button onclick="run('reverse')">Brainfuck => C++...++</button>
+
+  <br>
+
+  <button onclick="run('run')">Run C++...++</button>
+
+  <h2>Output</h2>
+  <p id="output"></p>
+</main>
+
+<script>
+  const input = document.getElementById('input')
+  const output = document.getElementById('output')
+
+  const helloworld = ";auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto{auto auto=auto;auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);;auto auto;}auto auto=auto;auto;;auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto{auto auto=auto;auto(auto);auto(auto);auto(auto);auto(auto);;auto auto;}auto auto=auto;auto(auto);auto;auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto;auto;auto(auto);auto(auto);auto(auto);auto;auto{auto auto;};auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto{auto auto=auto;auto(auto);auto(auto); auto(auto);auto(auto);;auto auto;}auto auto=auto;auto;;auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto{auto auto=auto;auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);;auto auto;}auto auto=auto;auto;;auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto{auto auto=auto;auto(auto);auto(auto);auto(auto);;auto auto;}auto auto=auto;auto;auto(auto);auto(auto);auto(auto);auto;auto auto;auto auto;auto auto;auto auto;auto auto;auto auto;auto;auto auto;auto auto;auto auto;auto auto;auto auto;auto auto;auto auto;auto auto;auto;auto{auto auto;}; auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto{auto auto=auto;auto(auto);auto(auto);auto(auto);auto(auto);;auto auto;}auto auto=auto;auto(auto);auto;auto{auto auto;}auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto(auto);auto;"
+  input.value = helloworld
+
+  const map = [
+    {
+      input: 'auto{',
+      output: '[',
+    },
+    {
+      input: '}',
+      output: ']',
+    },
+
+
+    {
+      input: 'auto auto=auto;',
+      output: '<',
+    },
+    {
+      input: 'auto(auto);',
+      output: '+',
+    },
+    {
+      input: 'auto auto;',
+      output: '-',
+    },
+
+
+    {
+      input: 'auto;',
+      output: '.',
+    },
+    {
+      input: ';',
+      output: '>',
+    },
+
+    // there not input interface
+    {
+      input: 'getchar(auto);',
+      output: '-',
+    },
+  ]
+
+  const replaceToken = (arg, reverse = false) => {
+    const output = reverse ? 'input' : 'output'
+    const input = reverse ? 'output' : 'input'
+
+    let result = arg
+    for (const m of map) {
+      result = result.replaceAll(m[input], m[output]);
+    }
+
+    return result
+  }
+
+  const run = (mode = 'run') => {
+    // update here ;)
+    let result = replaceToken(input.value, mode == 'reverse')
+
+    if (mode == 'run')
+      result = bf(result).run()
+
+    output.innerText = result
+  }
+</script>
